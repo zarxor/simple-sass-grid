@@ -1,0 +1,83 @@
+///
+///     Mixins
+///
+
+%clearfix {
+    *zoom: 1;
+    &:before, 
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+
+@mixin media-min ($breakpoint) {
+    @each $bp in $grid-breakpoints {
+        $bp_name: nth($bp, 1);
+        $bp_size: nth($bp, 2);
+
+        @if ($bp_name == $breakpoint) {
+            @media (min-width: #{$bp_size}) {
+                @content;
+            }
+        }
+    }
+}
+
+@mixin media-max ($breakpoint) {
+    $i: 1;
+
+    @each $bp in $grid-breakpoints {
+        $bp_name: nth($bp, 1);
+        $bp_size: nth($bp, 2);
+
+        @if ($bp_name == $breakpoint) {
+            @if ($i == length($grid-breakpoints)) {
+                @content;
+            }
+            @else {
+                $next: nth($grid-breakpoints, ($i + 1));
+                @media (max-width: nth($next, 2) - 1) {
+                    @content;
+                }
+            }
+        }
+
+        $i: $i + 1;
+    }
+}
+
+@mixin media-is ($breakpoint) {
+    $i: 1;
+
+    @each $bp in $grid-breakpoints {
+        $bp_name: nth($bp, 1);
+        $bp_size: nth($bp, 2);
+
+        @if ($bp_name == $breakpoint) {
+            @if ($i == length($grid-breakpoints)) {
+                @media (min-width: #{$bp_size}) {
+                    @content;
+                }
+            }
+            @else {
+                $next: nth($grid-breakpoints, ($i + 1));
+                @media (min-width: #{$bp_size}) and (max-width: nth($next, 2) - 1) {
+                    @content;
+                }
+            }
+        }
+
+        $i: $i + 1;
+    }
+}
+
+@mixin border-box {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; 
+}

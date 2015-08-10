@@ -1,0 +1,93 @@
+@import "grid-variables.scss";
+@import "grid-mixins.scss";
+
+/*
+
+    The Grid
+
+*/
+
+
+*, *:after, *:before {
+    margin: 0;
+    padding: 0;
+    @include border-box;
+}
+     
+img {
+    width: auto;
+    max-width: 100%;
+    height: auto; 
+}   
+ 
+.#{$grid-prefix}#{$grid-wrapper-name} {
+    width: 100%;
+    margin: 0 auto;
+}
+ 
+.#{$grid-prefix}#{$grid-wrapper-name}, 
+.#{$grid-prefix}#{$grid-row-name} {
+    @extend %clearfix;
+}
+
+.#{$grid-prefix}#{$grid-row-name} {
+    @media (min-width: nth(nth($grid-breakpoints, 3), 2)) {
+        margin-right: -$grid-col-padding;
+        margin-left: -$grid-col-padding;
+    }
+}
+      
+[class*='#{$grid-prefix}#{$grid-col-name}-'] {
+    float: left;
+    padding: $grid-col-padding;
+    width: 100%;
+    min-height: 1px; 
+}
+
+$grid-bp-prev: false !default;
+@each $bp in $grid-breakpoints {
+    $bp_name: nth($bp, 1);
+    $bp_size: nth($bp, 2);
+
+    @media (min-width: $bp_size) {
+        @for $i from 1 through $grid-columns {      
+            .#{$grid-prefix}#{$grid-col-name}-#{$bp_name}-#{$i} {         
+                width: 100% / $grid-columns * $i;   
+            }
+        }
+    }
+
+    @if $grid-bp-prev {
+        //$grid-bp-prev-name: nth($grid-bp-prev, 1);
+        //$bp_size: nth($grid-bp-prev, 2);
+        @media (min-width: nth($grid-bp-prev, 2)) and (max-width: $bp_size - 1) {
+            $grid-visible-name: 'visible';
+            .visible-#{nth($grid-bp-prev, 1)}-block {
+                display: block !important;
+            }
+            .visible-#{nth($grid-bp-prev, 1)}-inline {
+                display: inline !important;
+            }
+            .visible-#{nth($grid-bp-prev, 1)}-inline-block {
+                display: inline-block !important;
+            }
+            .hidden-#{nth($grid-bp-prev, 1)} {
+                display: none !important;
+            }
+            .text-#{nth($grid-bp-prev, 1)}-center {
+                text-align: center;
+            }
+            .text-#{nth($grid-bp-prev, 1)}-left {
+                text-align: left;
+            }
+            .text-#{nth($grid-bp-prev, 1)}-right {
+                text-align: right;
+            }
+        }
+    }
+
+    $grid-bp-prev: $bp;
+}
+/*
+ ----------- END OF GRID --------------
+*/
