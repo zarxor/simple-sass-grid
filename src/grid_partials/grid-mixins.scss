@@ -16,7 +16,7 @@
 
 @function grid-bp-get ($name) {
   @each $bp in $grid-breakpoints {
-    @if ($bp_name == $breakpoint) {
+    @if ($name == nth($bp, 1)) {
       @return $bp;
     }
   }

@@ -10,28 +10,34 @@ p Here is an example how to use them
 h4 Code
 code
       | .mixin-example-is {
-      |   background-color: blue;
+      |   background-color: #00EEEE;
+      |   
       |   @include media-is('sm') {
-      |     background-color: green;
+      |     background-color: #EEEE00;
       |   }
+      |   
       |   @include media-max('xs') {
-      |     background-color: red;
+      |     background-color: #EE00EE;
       |   }
       | }
 h4 DOM Result
-code.mixin-example-is Pull on the window
+code.mixin-example-is
+  div.visible-xs-block Screen is Extra small
+  div.visible-sm-block Screen is Small
+  div.visible-md-block Screen is Medium
+  div.visible-lg-block Screen is Large
 h4 CSS Result
 code
   | .mixin-example-is {
-  |   background-color: 00EEEE;
+  |   background-color: #00EEEE;
   | }
   | @media (min-width: 768px) and (max-width: 991px) {
   |   .mixin-example-is {
-  |     background-color: EEEE00;
+  |     background-color: #EEEE00;
   |   }
   | }
   | @media (max-width: 767px) {
   |   .mixin-example-is {
-  |     background-color: EE00EE;
+  |     background-color: #EE00EE;
   |   }
   | }

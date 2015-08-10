@@ -1,5 +1,13 @@
+h2 Including
+p You can either include the grid by using the grid.scss, example:
+code @import "grid.scss";
+p  ... or by importing all partials by them self (this is what grid.scss does), example:
+code
+  | @import "grid_partials/grid-variables.scss";
+  | @import "grid_partials/grid-mixins.scss";
+  | @import "grid_partials/grid-engine.scss";
 h2 Variables
-p U can setup the variables anyway you like, here's an example
+p U can setup the variables anyway you like. This is useful to change support for other systems like bootstrap. Or if you want to add more breakpoints.
 h3 Example of grid-variables.scss:
 code
   | $grid-prefix: ''; // Example: set 'grid-' to make wrapper, row and columns grid-*

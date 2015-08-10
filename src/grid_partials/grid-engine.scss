@@ -33,10 +33,10 @@ img {
 }
 
 .#{$grid-prefix}#{$grid-row-name} {
-    @media (min-width: nth(nth($grid-breakpoints, 3), 2)) {
-        margin-right: -$grid-col-padding;
-        margin-left: -$grid-col-padding;
-    }
+  @include media-min($grid-margins-from) {
+    margin-right: -$grid-col-padding;
+    margin-left: -$grid-col-padding;
+  }
 }
 
 [class*='#{$grid-prefix}#{$grid-col-name}-'] {
@@ -46,7 +46,6 @@ img {
     min-height: 1px;
 }
 
-$grid-bp-prev: false !default;
 @each $bp in $grid-breakpoints {
     $bp_name: nth($bp, 1);
     $bp_size: nth($bp, 2);
@@ -59,36 +58,25 @@ $grid-bp-prev: false !default;
         }
     }
 
-    @if $grid-bp-prev {
-        //$grid-bp-prev-name: nth($grid-bp-prev, 1);
-        //$bp_size: nth($grid-bp-prev, 2);
-        @media (min-width: nth($grid-bp-prev, 2)) and (max-width: $bp_size - 1) {
-            $grid-visible-name: 'visible';
-            .visible-#{nth($grid-bp-prev, 1)}-block {
-                display: block !important;
-            }
-            .visible-#{nth($grid-bp-prev, 1)}-inline {
-                display: inline !important;
-            }
-            .visible-#{nth($grid-bp-prev, 1)}-inline-block {
-                display: inline-block !important;
-            }
-            .hidden-#{nth($grid-bp-prev, 1)} {
-                display: none !important;
-            }
-            .text-#{nth($grid-bp-prev, 1)}-center {
-                text-align: center;
-            }
-            .text-#{nth($grid-bp-prev, 1)}-left {
-                text-align: left;
-            }
-            .text-#{nth($grid-bp-prev, 1)}-right {
-                text-align: right;
-            }
+    @include media-is($bp_name) {
+      $grid-display-types: block inline-block inline;
+      @each $display-type in $grid-display-types {
+        .visible-#{$bp_name}-#{$display-type} {
+          display: #{$display-type} !important;
         }
-    }
+      }
 
-    $grid-bp-prev: $bp;
+      .hidden-#{$bp_name} {
+        display: none !important;
+      }
+
+      $grid-align-types: center left right;
+      @each $align-type in $grid-align-types {
+        .text-#{$bp_name}-#{$align-type} {
+          text-align: #{$align-type} !important;
+        }
+      }
+    }
 }
 /*
  ----------- END OF GRID --------------

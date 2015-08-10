@@ -42,6 +42,10 @@ h3,h4,h5,h6 {
 }
 
 .mixin-example-is {
+  > div {
+    display: none;
+  }
+
   background-color: #00EEEE;
   @include media-is('sm') {
     background-color: #EEEE00;

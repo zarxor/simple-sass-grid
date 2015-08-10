@@ -1,4 +1,6 @@
-<!DOCTYPE html><html><head><title>Grid example</title><link href="css/main.css" type="text/css" rel="stylesheet"></head><body><div class="wrapper"><h1>SSG - Simple Sass Grid</h1><h2>Variables</h2><p>U can setup the variables anyway you like, here's an example</p><h3>Example of grid-variables.scss:</h3><code>$grid-prefix: ''; // Example: set 'grid-' to make wrapper, row and columns grid-*
+<!DOCTYPE html><html><head><title>Grid example</title><link href="css/main.css" type="text/css" rel="stylesheet"></head><body><div class="wrapper"><h1>SSG - Simple Sass Grid</h1><h2>Including</h2><p>You can either include the grid by using the grid.scss, example:</p><code>@import "grid.scss";</code><p> ... or by importing all partials by them self (this is what grid.scss does), example:</p><code>@import "grid_partials/grid-variables.scss";
+@import "grid_partials/grid-mixins.scss";
+@import "grid_partials/grid-engine.scss";</code><h2>Variables</h2><p>U can setup the variables anyway you like. This is useful to change support for other systems like bootstrap. Or if you want to add more breakpoints.</p><h3>Example of grid-variables.scss:</h3><code>$grid-prefix: ''; // Example: set 'grid-' to make wrapper, row and columns grid-*
 $grid-col-name: 'col';
 $grid-row-name: 'row';
 $grid-wrapper-name: 'wrapper';
@@ -13,23 +15,25 @@ $grid-breakpoints: (
     ('md', 992px),
     ('lg', 1200px)
 );</code><h2>Grid system</h2><p>Using a simple grid</p><div class="row"><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div><div class="col-xs-1"><div>col-xs-1</div></div></div><div class="row"><div class="col-xs-2"><div>col-xs-2</div></div><div class="col-xs-2"><div>col-xs-2</div></div><div class="col-xs-2"><div>col-xs-2</div></div><div class="col-xs-2"><div>col-xs-2</div></div><div class="col-xs-2"><div>col-xs-2</div></div><div class="col-xs-2"><div>col-xs-2</div></div></div><div class="row"><div class="col-xs-3"><div>col-xs-3</div></div><div class="col-xs-3"><div>col-xs-3</div></div><div class="col-xs-3"><div>col-xs-3</div></div><div class="col-xs-3"><div>col-xs-3</div></div></div><div class="row"><div class="col-xs-4"><div>col-xs-4</div></div><div class="col-xs-4"><div>col-xs-4</div></div><div class="col-xs-4"><div>col-xs-4</div></div></div><div class="row"><div class="col-xs-6"><div>col-xs-6</div></div><div class="col-xs-6"><div>col-xs-6</div></div></div><div class="row"><div class="col-xs-4"><div>col-xs-4</div></div><div class="col-xs-6"><div>col-xs-6</div></div><div class="col-xs-2"><div>col-xs-2</div></div></div><h2>Using the mixins</h2><p>Here you can see how to use the mixins</p><h3>Media mixins</h3><p>There are three media mixins<ul><li>media-min($breakpoint_name)</li><li>media-max($breakpoint_name)</li><li>media-is($breakpoint_name)</li></ul></p><p>Here is an example how to use them</p><h4>Code</h4><code>.mixin-example-is {
-  background-color: blue;
+  background-color: #00EEEE;
+  
   @include media-is('sm') {
-    background-color: green;
+    background-color: #EEEE00;
   }
+  
   @include media-max('xs') {
-    background-color: red;
+    background-color: #EE00EE;
   }
-}</code><h4>DOM Result</h4><code class="mixin-example-is">Pull on the window</code><h4>CSS Result</h4><code>.mixin-example-is {
-  background-color: 00EEEE;
+}</code><h4>DOM Result</h4><code class="mixin-example-is"><div class="visible-xs-block">Screen is Extra small</div><div class="visible-sm-block">Screen is Small</div><div class="visible-md-block">Screen is Medium</div><div class="visible-lg-block">Screen is Large</div></code><h4>CSS Result</h4><code>.mixin-example-is {
+  background-color: #00EEEE;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .mixin-example-is {
-    background-color: EEEE00;
+    background-color: #EEEE00;
   }
 }
 @media (max-width: 767px) {
   .mixin-example-is {
-    background-color: EE00EE;
+    background-color: #EE00EE;
   }
 }</code></div></body></html>
