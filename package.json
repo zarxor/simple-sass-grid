@@ -1,0 +1,11 @@
+{
+  "name": "sass-grid",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-sass": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-jade": "*"
+  }
+}

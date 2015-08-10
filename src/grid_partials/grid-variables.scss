@@ -1,15 +1,15 @@
 //
-//      Variables
+//      Grid variables
 //
 
-$grid-prefix: 'grid-';
+$grid-prefix: ''; // Example: set 'grid-' to make wrapper, row and columns grid-*
 $grid-col-name: 'col';
 $grid-row-name: 'row';
 $grid-wrapper-name: 'wrapper';
 
 $grid-columns: 12;
 $grid-max-width: 65em;
-$grid-col-padding: 1em; 
+$grid-col-padding: 1em;
 
 $grid-breakpoints: (
     ('xs', 0px),

@@ -1,0 +1,37 @@
+h2 Using the mixins
+p Here you can see how to use the mixins
+h3 Media mixins
+p There are three media mixins
+  ul
+    li media-min($breakpoint_name)
+    li media-max($breakpoint_name)
+    li media-is($breakpoint_name)
+p Here is an example how to use them
+h4 Code
+code
+      | .mixin-example-is {
+      |   background-color: blue;
+      |   @include media-is('sm') {
+      |     background-color: green;
+      |   }
+      |   @include media-max('xs') {
+      |     background-color: red;
+      |   }
+      | }
+h4 DOM Result
+code.mixin-example-is Pull on the window
+h4 CSS Result
+code
+  | .mixin-example-is {
+  |   background-color: 00EEEE;
+  | }
+  | @media (min-width: 768px) and (max-width: 991px) {
+  |   .mixin-example-is {
+  |     background-color: EEEE00;
+  |   }
+  | }
+  | @media (max-width: 767px) {
+  |   .mixin-example-is {
+  |     background-color: EE00EE;
+  |   }
+  | }

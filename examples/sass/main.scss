@@ -1,0 +1,52 @@
+@import '../../src/grid.scss';
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+body {
+    font-family: 'Roboto', sans-serif;
+    padding-bottom: 30px;
+}
+
+ul, ol {
+  margin: 1em 0;
+  padding-left: 40px;
+}
+
+[class*='col-'] {
+  > div {
+    background-color: #CCC;
+    padding: 5px;
+    text-align: center;
+  }
+}
+
+
+code {
+  background: #EFEFEF;
+  border: 1px solid #CCC;
+  display: block;
+  padding: 10px;
+  white-space: pre;
+  margin: 10px;
+}
+
+h1 {
+  padding: 20px 0 5px
+}
+
+h2 {
+  padding: 10px 0 5px
+}
+
+h3,h4,h5,h6 {
+  padding: 5px 0 0
+}
+
+.mixin-example-is {
+  background-color: #00EEEE;
+  @include media-is('sm') {
+    background-color: #EEEE00;
+  }
+  @include media-max('xs') {
+    background-color: #EE00EE;
+  }
+}

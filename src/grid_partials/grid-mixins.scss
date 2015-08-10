@@ -4,7 +4,7 @@
 
 %clearfix {
     *zoom: 1;
-    &:before, 
+    &:before,
     &:after {
         content: " ";
         display: table;
@@ -14,17 +14,18 @@
     }
 }
 
+@function grid-bp-get ($name) {
+  @each $bp in $grid-breakpoints {
+    @if ($bp_name == $breakpoint) {
+      @return $bp;
+    }
+  }
+}
 
 @mixin media-min ($breakpoint) {
-    @each $bp in $grid-breakpoints {
-        $bp_name: nth($bp, 1);
-        $bp_size: nth($bp, 2);
-
-        @if ($bp_name == $breakpoint) {
-            @media (min-width: #{$bp_size}) {
-                @content;
-            }
-        }
+    $bp: grid-bp-get($breakpoint);
+    @media (min-width: nth($bp, 2)) {
+        @content;
     }
 }
 
@@ -79,5 +80,5 @@
 @mixin border-box {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
