@@ -1,12 +1,12 @@
-@each $bp in $grid-breakpoints {
-  $bp_name: nth($bp, 1);
-
-  @media (min-width: nth($bp, 2)) {
-    .#{$grid-prefix}#{$grid-col-name}-#{$bp_name}-golden-large {
-      width: 61,875%;
-    }
-    .#{$grid-prefix}#{$grid-col-name}-#{$bp_name}-golden-small {
-      width: 38,125%;
+@if (grid-settings-get('helpers','golden')) {
+  @each $_name, $_values in $grid-breakpoints-objects {
+    @include media-min ($_name) {
+      .#{grid-settings-get('prefix')}#{grid-settings-get('names','column')}-#{$_name}-golden-large {
+        width: 61.875%;
+      }
+      .#{grid-settings-get('prefix')}#{grid-settings-get('names','column')}-#{$_name}-golden-small {
+        width: 38.125%;
+      }
     }
   }
 }

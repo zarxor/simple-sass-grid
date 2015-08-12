@@ -4,24 +4,34 @@ code @import "grid.scss";
 p  ... or by importing all partials by them self (this is what grid.scss does), example:
 code
   | @import "grid_partials/grid-variables.scss";
+  | @import "grid_partials/grid-functions.scss";
   | @import "grid_partials/grid-mixins.scss";
   | @import "grid_partials/grid-engine.scss";
+  | @import "grid_partials/grid-golden-ratio.scss";
 h2 Variables
 p U can setup the variables anyway you like. This is useful to change support for other systems like bootstrap. Or if you want to add more breakpoints.
 h3 Example of grid-variables.scss:
 code
-  | $grid-prefix: ''; // Example: set 'grid-' to make wrapper, row and columns grid-*
-  | $grid-col-name: 'col';
-  | $grid-row-name: 'row';
-  | $grid-wrapper-name: 'wrapper';
-  | 
-  | $grid-columns: 12;
-  | $grid-max-width: 65em;
-  | $grid-col-padding: 1em;
+  | $grid-settings: (
+  |   'columns': 12,
+  |   'max-width': 65em,
+  |   'gutter': 2em,
+  |   'prefix': '',
+  |   'margin-breakpoint': 'md',
+  |   'names': (
+  |     'column': 'col',
+  |     'row': 'row',
+  |     'wrapper': 'wrapper'
+  |   ),
+  |   'helpers': (
+  |     'display': true,
+  |     'text': true
+  |   )
+  | );
   | 
   | $grid-breakpoints: (
-  |     ('xs', 0px),
-  |     ('sm', 768px),
-  |     ('md', 992px),
-  |     ('lg', 1200px)
+  |   'xs': 0px,
+  |   'sm': 768px,
+  |   'md': 992px,
+  |   'lg': 1200px
   | );

@@ -2,83 +2,68 @@
 ///     Mixins
 ///
 
-%clearfix {
-    *zoom: 1;
-    &:before,
-    &:after {
-        content: " ";
-        display: table;
-    }
-    &:after {
-        clear: both;
-    }
-}
-
-@function grid-bp-get ($name) {
-  @each $bp in $grid-breakpoints {
-    @if ($name == nth($bp, 1)) {
-      @return $bp;
-    }
-  }
-}
-
+////
+// @include media-min('xs') {
+//  display: none;
+// }
+////
 @mixin media-min ($breakpoint) {
-    $bp: grid-bp-get($breakpoint);
-    @media (min-width: nth($bp, 2)) {
+    @media (min-width: map-get(grid-get-breakpoint($breakpoint), 'min')) {
         @content;
     }
 }
 
+////
+// @include media-max('md') {
+//  display: none;
+// }
+////
 @mixin media-max ($breakpoint) {
-    $i: 1;
-
-    @each $bp in $grid-breakpoints {
-        $bp_name: nth($bp, 1);
-        $bp_size: nth($bp, 2);
-
-        @if ($bp_name == $breakpoint) {
-            @if ($i == length($grid-breakpoints)) {
-                @content;
-            }
-            @else {
-                $next: nth($grid-breakpoints, ($i + 1));
-                @media (max-width: nth($next, 2) - 1) {
-                    @content;
-                }
-            }
-        }
-
-        $i: $i + 1;
-    }
+  $bp: grid-get-breakpoint($breakpoint);
+  @media (max-width: map-get($bp, 'max')) {
+      @content;
+  }
 }
 
+////
+// @include media-between('md', 'lg') {
+//  display: block;
+// }
+////
+@mixin media-between($break_from, $break_to) {
+  $_bp_min: grid-get-breakpoint($break_from);
+  $_bp_max: grid-get-breakpoint($break_to);
+  @if (map-get($_bp_max, 'max') != null) {
+    @media (min-width: map-get($_bp_min, 'min')) and (max-width: map-get($_bp_max, 'max')) {
+        @content;
+    }
+  }
+  @else {
+    @include media-min($break_from) {
+      @content;
+    }
+  }
+}
+
+////
+// @include media-is('xs') {
+//  display: none;
+// }
+////
 @mixin media-is ($breakpoint) {
-    $i: 1;
-
-    @each $bp in $grid-breakpoints {
-        $bp_name: nth($bp, 1);
-        $bp_size: nth($bp, 2);
-
-        @if ($bp_name == $breakpoint) {
-            @if ($i == length($grid-breakpoints)) {
-                @media (min-width: #{$bp_size}) {
-                    @content;
-                }
-            }
-            @else {
-                $next: nth($grid-breakpoints, ($i + 1));
-                @media (min-width: #{$bp_size}) and (max-width: nth($next, 2) - 1) {
-                    @content;
-                }
-            }
-        }
-
-        $i: $i + 1;
-    }
+  @include media-between($breakpoint, $breakpoint) {
+    @content;
+  }
 }
 
-@mixin border-box {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+////
+// @include vendor(border-radius, 4px);
+// @include vendor(box-sizing, border-box);
+////
+@mixin vendor($property, $value...) {
+  -webkit-#{$property}:$value;
+     -moz-#{$property}:$value;
+      -ms-#{$property}:$value;
+       -o-#{$property}:$value;
+          #{$property}:$value;
 }

@@ -1,3 +1,28 @@
+$grid-settings: (
+  'columns': 12,
+  'max-width': 65em,
+  'gutter': 2em,
+  'prefix': '',
+  'margin-breakpoint': 'md',
+  'names': (
+    'column': 'col',
+    'row': 'row',
+    'wrapper': 'wrapper'
+  ),
+  'helpers': (
+    'display': true,
+    'text': true,
+    'golden': true
+  )
+);
+
+$grid-breakpoints: (
+  'xs': 0px,
+  'sm': 768px,
+  'md': 992px,
+  'lg': 1200px
+);
+
 @import '../../src/grid.scss';
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 

@@ -4,12 +4,28 @@
     Simple Sass Grid
 
 */
+$grid-breakpoints-objects: grid-make-bp-objects();
 
-// Reset
-*, *:after, *:before {
-    margin: 0;
-    padding: 0;
-    @include border-box;
+%clearfix {
+    *zoom: 1;
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@if (grid-settings-get('reset')) {
+  /*
+  *, *:after, *:before {
+      margin: 0;
+      padding: 0;
+      @include vendor('box-sizing', border-box)
+  }
+  */
 }
 
 img {
@@ -18,65 +34,85 @@ img {
     height: auto;
 }
 
-.#{$grid-prefix}#{$grid-wrapper-name}-fluid {
+.#{grid-settings-get('prefix')}#{grid-settings-get('names','wrapper')}-fluid {
   width: 100%;
   margin: 0 auto;
 }
-.#{$grid-prefix}#{$grid-wrapper-name} {
-  @extend .#{$grid-prefix}#{$grid-wrapper-name}-fluid;
-  max-width: $grid-max-width;
+.#{grid-settings-get('prefix')}#{grid-settings-get('names','wrapper')} {
+  @extend .#{grid-settings-get('prefix')}#{grid-settings-get('names','wrapper')}-fluid;
+  max-width: #{grid-settings-get('max-width')};
 }
 
-.#{$grid-prefix}#{$grid-wrapper-name},
-.#{$grid-prefix}#{$grid-row-name} {
+.#{grid-settings-get('prefix')}#{grid-settings-get('names','wrapper')},
+.#{grid-settings-get('prefix')}#{grid-settings-get('names','row')} {
     @extend %clearfix;
 }
 
-.#{$grid-prefix}#{$grid-row-name} {
-  @include media-min($grid-margins-from) {
-    margin-right: -$grid-col-padding;
-    margin-left: -$grid-col-padding;
+.#{grid-settings-get('prefix')}#{grid-settings-get('names','row')} {
+  @include media-min(grid-settings-get('margin-breakpoint')) {
+    margin-right: -(grid-settings-get('gutter') / 2);
+    margin-left: -(grid-settings-get('gutter') / 2);
   }
 }
 
-[class*='#{$grid-prefix}#{$grid-col-name}-'] {
-    float: left;
-    padding: $grid-col-padding;
-    width: 100%;
-    min-height: 1px;
+[class*='#{grid-settings-get('prefix')}#{grid-settings-get('names','column')}-'] {
+  float: left;
+  padding: (grid-settings-get('gutter') / 2);
+  width: 100%;
+  min-height: 1px;
+  @include vendor(box-sizing,border-box);
 }
 
-@each $bp in $grid-breakpoints {
-    $bp_name: nth($bp, 1);
-    $bp_size: nth($bp, 2);
+[class*='#{grid-settings-get('prefix')}#{grid-settings-get('names','column')}-push-'],
+[class*='#{grid-settings-get('prefix')}#{grid-settings-get('names','column')}-pull-'] {
+  position: relative;
+}
 
-    @media (min-width: $bp_size) {
-        @for $i from 1 through $grid-columns {
-            .#{$grid-prefix}#{$grid-col-name}-#{$bp_name}-#{$i} {
-                width: 100% / $grid-columns * $i;
-            }
-        }
+@each $_name, $_values in $grid-breakpoints-objects {
+  $_no_of_cols: grid-settings-get('columns');
+  @include media-min ($_name) {
+    @for $i from 1 through $_no_of_cols {
+      $_width: ((100% / $_no_of_cols) * $i);
+      .#{grid-settings-get('prefix')}#{grid-settings-get('names','column')}-#{$_name}-#{$i} {
+          width: $_width;
+      }
+
+      .#{grid-settings-get('prefix')}#{grid-settings-get('names','column')}-#{$_name}-pull-#{$i} {
+        left: -$_width;
+        //@include respond-device(phones) { left: 0; }
+      }
+
+      .#{grid-settings-get('prefix')}#{grid-settings-get('names','column')}-#{$_name}-push-#{$i} {
+        left: $_width;
+        //@include respond-device(phones) { left: 0; }
+      }
     }
+  }
 
-    @include media-is($bp_name) {
+
+  @include media-is($_name) {
+    @if (grid-settings-get('helpers','display')) {
       $grid-display-types: block inline-block inline;
       @each $display-type in $grid-display-types {
-        .visible-#{$bp_name}-#{$display-type} {
+        .visible-#{$_name}-#{$display-type} {
           display: #{$display-type} !important;
         }
       }
 
-      .hidden-#{$bp_name} {
+      .hidden-#{$_name} {
         display: none !important;
       }
+    }
 
+    @if (grid-settings-get('helpers','text')) {
       $grid-align-types: center left right;
       @each $align-type in $grid-align-types {
-        .text-#{$bp_name}-#{$align-type} {
+        .text-#{$_name}-#{$align-type} {
           text-align: #{$align-type} !important;
         }
       }
     }
+  }
 }
 /*
  ----------- END OF GRID --------------

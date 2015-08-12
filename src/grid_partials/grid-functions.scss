@@ -1,0 +1,43 @@
+///
+///     Functions
+///
+
+@function grid-make-bp-objects () {
+  $_breakpoints: ();
+  $_bp_keys: map_keys($grid-breakpoints);
+  @each $key, $value in $grid-breakpoints {
+    $_max: null;
+    $_i: index($_bp_keys, $key);
+    @if ($_i != length($grid-breakpoints)) {
+      $_max: nth(nth($grid-breakpoints, $_i + 1), 2) - 1;
+    }
+
+    $_breakpoints: map-merge($_breakpoints, ( $key: ( 'min': $value, 'max': $_max ) ));
+  }
+  @return $_breakpoints;
+}
+
+@function grid-get-breakpoint($name) {
+  @if (map-has-key($grid-breakpoints-objects, $name)) {
+    @return map-get($grid-breakpoints-objects, $name);
+  }
+  @else { @return (); }
+}
+
+@function grid-get-width ($name) {
+  @if (map-has-key($grid-breakpoints, $name)) {
+    @return map-get($grid-breakpoints, $name);
+  }
+  @else {
+    @return 0px;
+  }
+}
+
+@function grid-settings-get($name, $subname: null) {
+  @if ($subname != null) {
+    @return map-get(map-get($grid-settings, $name), $subname);
+  }
+  @else {
+    @return map-get($grid-settings, $name);
+  }
+}
