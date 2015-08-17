@@ -19,4 +19,4 @@ The documention / examples can be found in the ``` examples/ ``` folder.
 Just open ``` examples/index.html ``` in your favorite browser to test the  ``` dist/grid.min.css ``` file.
 
 # Source #
-The source can be found [here](https://bitbucket.org/zarx/simple-sass-grid)
+The source can be found [here at github](https://github.com/zarxor/simple-sass-grid)
